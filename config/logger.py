@@ -4,7 +4,7 @@ from logging.handlers import RotatingFileHandler
 
 def setup_logger():
     logger = getLogger(__name__)
-    FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    FORMAT = '%(asctime)s - %(filename)s: - %(name)s - %(levelname)s - %(message)s'
 
     file_handler = RotatingFileHandler(
         "logs/main.log",
@@ -15,7 +15,7 @@ def setup_logger():
     file_handler.setLevel('INFO')
 
     stream_handler = StreamHandler()
-    stream_handler.setLevel('ERROR')
+    stream_handler.setLevel('DEBUG')
 
     basicConfig(
         level=logging.DEBUG,
