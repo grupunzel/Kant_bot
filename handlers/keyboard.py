@@ -1,5 +1,5 @@
-from aiogram.filters import callback_data
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
+
 
 def main_roots_keyboard() -> ReplyKeyboardMarkup:
     return ReplyKeyboardMarkup(
@@ -15,3 +15,10 @@ def main_roots_keyboard() -> ReplyKeyboardMarkup:
         one_time_keyboard=True
     )
 
+def info_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="📅 Расписание", callback_data="schedule")],
+        [InlineKeyboardButton(text="💰 Стипендии", callback_data="scholarship")],
+        [InlineKeyboardButton(text="📞 Контакты учебного офиса", callback_data="office_contacts")],
+        [InlineKeyboardButton(text="🌍 Центр визово-миграционного сопровождения", callback_data="visa_center")]
+    ])

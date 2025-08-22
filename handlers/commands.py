@@ -1,10 +1,10 @@
 from aiogram import Router, types, F
 from aiogram.filters import CommandStart
-from aiogram.types import ReplyKeyboardRemove
 from config.logger import logger
-from handlers.keyboard import main_roots_keyboard
+from handlers.keyboard import main_roots_keyboard, info_keyboard
 import traceback
-
+from aiogram.types import FSInputFile
+import os
 router = Router()
 
 @router.message(CommandStart())
@@ -19,17 +19,10 @@ async def send_welcome(message: types.Message):
 # Хэндлер для информации про университет
 @router.message(F.text == "🎓Информация про университет")
 async def university_info(message: types.Message):
-    text = """🎓 *Информация о университете*
-
-Здесь будет подробная информация о вашем университете:
-• История и миссия
-• Факультеты и направления
-• Контакты администрации
-• Расписание работы"""
-
-    await message.answer(text, parse_mode="Markdown")
-
-
+    text = "🎓 Информация о университете"
+    await message.answer(text,
+                         reply_markup=info_keyboard(),
+                         parse_mode="Markdown")
 
 @router.message(F.text == "📍Местоположение корпуса")
 async def location_info(message: types.Message):
@@ -46,14 +39,9 @@ async def location_info(message: types.Message):
 
 @router.message(F.text == "🏘️Общежития")
 async def dormitory_info(message: types.Message):
-    text = """🏠 *Информация об общежитиях*
 
-• Общежитие №1: [условия, контакты]
-• Общежитие №2: [условия, контакты] 
-• Правила проживания
-• Заселение и выселение"""
-
-    await message.answer(text, parse_mode="Markdown")
+    await message.reply_document(document=FSInputFile("handlers/info_files/ОБЩЕЖИТИЕ.pdf"),
+                                 caption="Чтобы ознакомиться с подробной информацией, откройте прикрепленный ниже файл.")
 
 
 @router.message(F.text == "🏥Медцентр")
@@ -70,16 +58,7 @@ async def medical_center_info(message: types.Message):
 
 @router.message(F.text == "⚠️Критические ситуации")
 async def emergency_info(message: types.Message):
-    text = """⚠️ *Критические ситуации*
-
-*Экстренные телефоны:*
-• Пожарная: 101
-• Полиция: 102  
-• Скорая: 103
-• Дежурный по университету: +7 (XXX) XXX-XX-XX
-
-*Правила поведения в ЧС*"""
-
+    text = ''
     await message.answer(text, parse_mode="Markdown")
 
 
