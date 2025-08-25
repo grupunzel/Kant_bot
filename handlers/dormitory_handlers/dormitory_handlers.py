@@ -1,6 +1,7 @@
 from aiogram import Router, F
 from aiogram.types import CallbackQuery, InlineKeyboardMarkup, FSInputFile
-from handlers.keyboard import dormitory_check_in_keyboard, back_to_dormitory_keyboard, dormitory_keyboard
+from handlers.dormitory_handlers.dormitory_keyboard import dormitory_check_in_keyboard, back_to_dormitory_keyboard, \
+    dormitory_keyboard, dormitory_addresses_keyboard
 
 router = Router()
 
@@ -77,10 +78,23 @@ async def dormitory_payment_handler(callback: CallbackQuery):
                                      reply_markup=back_to_dormitory_keyboard())
     await callback.answer()
 
+
+# Хэндлер для адресов (возможно инетграция с картами?
+@router.callback_query(F.data == "dormitory_address")
+async def dormitory_addresses_handler(callback: CallbackQuery):
+    text = 'Выбери общежитие'
+    await callback.message.delete()
+    await callback.message.answer(text,
+                                    reply_markup=dormitory_addresses_keyboard())
+    await callback.answer()
+
+
+
+
 # Хэндлер для правил проживания
 @router.callback_query(F.data == "dormitory_rules")
 async def dormitory_rules_handler(callback: CallbackQuery):
-    photo = FSInputFile('handlers/pictures/dormitory_rules.jpg')
+    photo = FSInputFile('handlers/dormitory_handlers/dormitory_pictures/dormitory_rules.jpg')
     caption = """
 - Уборка в комнате и на кухне после приготовления проводится самостоятельно.
 - Запрещается заводить животных в квартире.
@@ -98,6 +112,7 @@ async def dormitory_rules_handler(callback: CallbackQuery):
 
 *Совет*! Знай своего коменданта! Сразу после заселения познакомься со своим комендантом, так как это первый человек, кто поможет тебе со всеми вопросами проживания.
 """
+
     await callback.message.edit_text(caption)
     await callback.message.answer_photo(photo=photo,
                                         caption="🗒️ Памятка с правилами!",

@@ -1,8 +1,9 @@
 from aiogram import Bot, Dispatcher
 from config.settings import settings
 from config.logger import logger
-from handlers import commands, messages, dormitory_handlers
-from handlers.dormitory_handlers import dormitory_rules_handler
+from handlers import commands, messages
+from handlers.dormitory_handlers import dormitory_handlers
+from handlers.dormitory_handlers import dormitory_addresses_handler
 
 
 async def main():
@@ -12,6 +13,7 @@ async def main():
     dp.include_router(commands.router)
     dp.include_router(messages.router)
     dp.include_router(dormitory_handlers.router)
+    dp.include_router(dormitory_addresses_handler.router)
 
     try:
         logger.info('Bot started')

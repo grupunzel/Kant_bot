@@ -12,7 +12,7 @@ def setup_logger():
         backupCount=5,
         encoding='utf-8'
     )
-    file_handler.setLevel('INFO')
+    file_handler.setLevel('DEBUG')
 
     stream_handler = StreamHandler()
     stream_handler.setLevel('DEBUG')
