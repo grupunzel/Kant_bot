@@ -3,7 +3,7 @@ import os
 from aiogram import Router, types, F
 from aiogram.filters import CommandStart
 from config.logger import logger
-from handlers.keyboard import main_roots_keyboard, info_keyboard
+from handlers.keyboard import main_roots_keyboard, info_keyboard, dormitory_keyboard
 import traceback
 from aiogram.types import FSInputFile, CallbackQuery
 
@@ -32,10 +32,12 @@ async def location_info(callback: CallbackQuery):
     await callback.message.answer(text, parse_mode="Markdown")
     await callback.answer()
 
-@router.callback_query(F.data == "home")
+@router.callback_query(F.data == "dormitory")
 async def dormitory_info(callback: CallbackQuery):
     text = "🏘️ Общежития"
-    await callback.message.answer(text, parse_mode="Markdown")
+    await callback.message.edit_text(text,
+                                     reply_markup=dormitory_keyboard(),
+                                     parse_mode="Markdown")
     await callback.answer()
 
 @router.callback_query(F.data == "hospital")
