@@ -1,12 +1,10 @@
-import asyncio
-import os
 import traceback
 from aiogram import Router, types, F
-from aiogram.filters import CommandStart, Command
+from aiogram.filters import CommandStart
 from config.logger import logger
 from handlers.keyboard import main_roots_keyboard, info_keyboard
 from handlers.dormitory_handlers.dormitory_keyboard import dormitory_keyboard
-from aiogram.types import FSInputFile, CallbackQuery
+from aiogram.types import CallbackQuery
 from handlers.language_check_handlers.language_check_keyboard import language_check_keyboard
 
 router = Router()

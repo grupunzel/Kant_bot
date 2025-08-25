@@ -1,14 +1,11 @@
 from aiogram import Router, F
-from aiogram.types import CallbackQuery, InlineKeyboardMarkup, FSInputFile
-from handlers.dormitory_handlers.dormitory_keyboard import dormitory_check_in_keyboard, back_to_dormitory_keyboard, \
-    dormitory_keyboard, dormitory_addresses_keyboard,  back_to_addresses_keyboard
+from handlers.dormitory_handlers.dormitory_keyboard import back_to_addresses_keyboard
 from aiogram.types import CallbackQuery, FSInputFile
 from aiogram.exceptions import TelegramBadRequest
 from config.logger import logger
 
 router = Router()
 
-import os
 # Хэндлер для общежития №1
 @router.callback_query(F.data == "dormitory_1")
 async def dormitory_1_handler(callback: CallbackQuery):
