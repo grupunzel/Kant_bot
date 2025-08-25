@@ -40,7 +40,7 @@ async def dormitory_info(callback: CallbackQuery):
 
 @router.callback_query(F.data == "hospital")
 async def medical_center_info(callback: CallbackQuery):
-    text = """🏥 *Медицинский центр"""
+    text = """🏥 Медицинский центр"""
     await callback.message.answer(text, parse_mode="Markdown")
     await callback.answer()
 
@@ -54,6 +54,16 @@ async def emergency_info(callback: CallbackQuery):
 async def language_check_info(callback: CallbackQuery):
     text = "🇷🇺 Проверка русского языка"
     await callback.message.answer(text, parse_mode="Markdown")
+    await callback.answer()
+
+@router.callback_query(F.data == "back_to_main")
+async def back_to_main_menu(callback: CallbackQuery):
+    text = "Привет! С чем помочь?"
+    await callback.message.edit_text(
+        text,
+        reply_markup=main_roots_keyboard(),
+        parse_mode="Markdown"
+    )
     await callback.answer()
 
 @router.message()
