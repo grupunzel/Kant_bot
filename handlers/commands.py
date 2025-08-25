@@ -1,12 +1,13 @@
 import asyncio
 import os
+import traceback
 from aiogram import Router, types, F
 from aiogram.filters import CommandStart, Command
 from config.logger import logger
 from handlers.keyboard import main_roots_keyboard, info_keyboard
 from handlers.dormitory_handlers.dormitory_keyboard import dormitory_keyboard
-import traceback
 from aiogram.types import FSInputFile, CallbackQuery
+from handlers.language_check_handlers.language_check_keyboard import language_check_keyboard
 
 router = Router()
 
@@ -59,7 +60,9 @@ async def emergency_info(callback: CallbackQuery):
 @router.callback_query(F.data == "language_check")
 async def language_check_info(callback: CallbackQuery):
     text = "🇷🇺 Проверка русского языка"
-    await callback.message.answer(text, parse_mode="Markdown")
+    await callback.message.edit_text(text,
+                                  parse_mode="Markdown",
+                                  reply_markup=language_check_keyboard())
     await callback.answer()
 
 @router.callback_query(F.data == "back_to_main")
